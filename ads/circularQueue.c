@@ -7,7 +7,7 @@ int delete();
 void display();
 void main()
 {
-    printf("Enter the size of the queue:");
+    printf("\nEnter the size of the queue:");
     scanf("%d", &max);
     while (flag)
     {
