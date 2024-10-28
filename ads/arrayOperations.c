@@ -16,7 +16,7 @@ int main()
     }
     while (flag == 1)
     {
-        printf("\n1.Insertion\n2.Deletion\n3.Search\n4.Sort\n5.Display\n6.Exit\nChoose the operation:");
+        printf("\n1.Insertion\n2.Deletion\n3.Search\n4.Sort\n5.Display\n6.Exit\nChoose the array operation:");
         scanf("%d", &op);
         switch (op)
         {
