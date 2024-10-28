@@ -7,7 +7,7 @@ void display();
 int arr[40], size, flag = 1, op, num, pos, temp;
 int main()
 {
-    printf("\nEnter the array size:");
+    printf("\nEnter size of the array:");
     scanf("%d", &size);
     printf("\nEnter the elements:\n");
     for (int i = 0; i < size; i++)
