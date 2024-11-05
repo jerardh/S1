@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 struct Node
 {
     struct Node *prev;
@@ -10,9 +10,10 @@ struct Node *head = NULL;
 struct Node *tail = NULL;
 void insertionBeg(int num);
 void insertionEnd(int num);
-void insertPos(int pos,int num);
+void insertPos(int pos, int num);
 int deleteBeg();
 int deleteEnd();
+int deletePos(int pos);
 void display();
 void insert();
 void delete();
@@ -39,36 +40,52 @@ void insertionBeg(int num)
     }
     printf("\nInsertion Successful\n");
 }
-void delete(){
+void delete()
+{
     int opcode, data, pos;
     printf("\n1.Deletion from beginning\n2.Deletion from end\n3.Deletion from a position\nEnter the operation:\n");
     scanf("%d", &opcode);
     switch (opcode)
     {
-    case 1:data=deleteBeg();
-    if(data==-1){
-        printf("\nList is empty");
-    }
-    else{
-        printf("Deleted value is %d",data);
-    }
-    break;
-    case 2:data=deleteEnd();
-    if(data==-1){
-        printf("\nList is empty");
-    }
-    else{
-        printf("Deleted value is %d",data);
-    }
+    case 1:
+        data = deleteBeg();
+        if (data == -1)
+        {
+            printf("\nList is empty");
+        }
+        else
+        {
+            printf("\nDeleted value is %d", data);
+        }
+        break;
+    case 2:
+        data = deleteEnd();
+        if (data == -1)
+        {
+            printf("\nList is empty");
+        }
+        else
+        {
+            printf("\nDeleted value is %d", data);
+        }
         break;
     case 3:
         printf("\nEnter the position:\n");
         scanf("%d", &pos);
+        data = deletePos(pos);
+        if (data == -1)
+        {
+            printf("\nList is empty");
+        }
+        else
+        {
+            printf("\nDeleted value is %d", data);
+        }
         break;
     default:
         printf("\nEnter a valid choice\n");
         break;
-    } 
+    }
 }
 void insert()
 {
@@ -155,45 +172,69 @@ void insertPos(int pos, int num)
         printf("\nInserted Successfully\n");
     }
 }
-int deleteBeg(){
+int deleteBeg()
+{
     int num;
-    if(head==NULL){
+    if (head == NULL)
+    {
         return -1;
     }
-    else if(head==tail){
-        num=head->data;
-        head=NULL;
-        tail=NULL;
+    else if (head == tail)
+    {
+        num = head->data;
+        head = NULL;
+        tail = NULL;
         return num;
     }
-    else{
-        struct Node* first=head;
-        struct Node* second;
-        second=first->next;
-        second->prev=NULL;
-        head=second;
+    else
+    {
+        struct Node *first = head;
+        struct Node *second;
+        second = first->next;
+        second->prev = NULL;
+        head = second;
         return first->data;
-        
     }
 }
-int deleteEnd(){
-   int num;
+int deleteEnd()
+{
+    int num;
+    if (head == NULL)
+    {
+        return -1;
+    }
+    else if (head == tail)
+    {
+        num = head->data;
+        head = NULL;
+        tail = NULL;
+        return num;
+    }
+    else
+    {
+        struct Node *last = tail;
+        struct Node *prev = last->prev;
+        prev->next = NULL;
+        tail = prev;
+        return last->data;
+    }
+}
+int deletePos(int pos){
     if(head==NULL){
         return -1;
     }
-    else if(head==tail){
-        num=head->data;
-        head=NULL;
-        tail=NULL;
-        return num;
-    }
     else{
-        struct Node* last=tail;
-        struct Node* prev=last->prev;
-        prev->next=NULL;
-        tail=prev;
-        return last->data;
-    } 
+        struct Node *temp=head;
+        for(int i=0;i<pos-1;i++){
+            temp=temp->next;
+        }
+        struct Node* current=temp->next;
+        struct Node* nextNode=current->next;
+        temp->next=nextNode;
+        nextNode->prev=current;
+        return current->data;
+
+    }
 }
 void main()
 {
@@ -208,7 +249,9 @@ void main()
         case 1:
             insert();
             break;
-        case 2:delete();break;
+        case 2:
+            delete ();
+            break;
         case 3:
             display();
             break;
