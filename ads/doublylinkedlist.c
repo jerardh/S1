@@ -11,8 +11,12 @@ struct Node *tail = NULL;
 void insertionBeg(int num);
 void insertionEnd(int num);
 void insertPos(int pos,int num);
+int deleteBeg();
+int deleteEnd();
 void display();
 void insert();
+void delete();
+
 // insertion_at_beginning
 void insertionBeg(int num)
 {
@@ -34,6 +38,37 @@ void insertionBeg(int num)
         temp->prev = newnode;
     }
     printf("\nInsertion Successful\n");
+}
+void delete(){
+    int opcode, data, pos;
+    printf("\n1.Deletion from beginning\n2.Deletion from end\n3.Deletion from a position\nEnter the operation:\n");
+    scanf("%d", &opcode);
+    switch (opcode)
+    {
+    case 1:data=deleteBeg();
+    if(data==-1){
+        printf("\nList is empty");
+    }
+    else{
+        printf("Deleted value is %d",data);
+    }
+    break;
+    case 2:data=deleteEnd();
+    if(data==-1){
+        printf("\nList is empty");
+    }
+    else{
+        printf("Deleted value is %d",data);
+    }
+        break;
+    case 3:
+        printf("\nEnter the position:\n");
+        scanf("%d", &pos);
+        break;
+    default:
+        printf("\nEnter a valid choice\n");
+        break;
+    } 
 }
 void insert()
 {
@@ -120,6 +155,46 @@ void insertPos(int pos, int num)
         printf("\nInserted Successfully\n");
     }
 }
+int deleteBeg(){
+    int num;
+    if(head==NULL){
+        return -1;
+    }
+    else if(head==tail){
+        num=head->data;
+        head=NULL;
+        tail=NULL;
+        return num;
+    }
+    else{
+        struct Node* first=head;
+        struct Node* second;
+        second=first->next;
+        second->prev=NULL;
+        head=second;
+        return first->data;
+        
+    }
+}
+int deleteEnd(){
+   int num;
+    if(head==NULL){
+        return -1;
+    }
+    else if(head==tail){
+        num=head->data;
+        head=NULL;
+        tail=NULL;
+        return num;
+    }
+    else{
+        struct Node* last=tail;
+        struct Node* prev=last->prev;
+        prev->next=NULL;
+        tail=prev;
+        return last->data;
+    } 
+}
 void main()
 {
     printf("\nDoubly Linked List\n");
@@ -133,6 +208,7 @@ void main()
         case 1:
             insert();
             break;
+        case 2:delete();break;
         case 3:
             display();
             break;
