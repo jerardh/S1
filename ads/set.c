@@ -6,6 +6,7 @@ void printSet(int a[], int size);
 bool isPresent(int num);
 void setToBit(int set[], int size, int bitSet[]);
 void unionSet(int s1[], int s2[]);
+void interSectionSet(int s1[], int s2[]);
 void main()
 {
     int p;
@@ -28,17 +29,20 @@ void main()
     printf("\nSet 1 Elements\n");
     printSet(set1, n1);
     printf("\nSet 2 Elements\n");
-    printSet(set1, n2);
+    printSet(set2, n2);
     printf("\nBit Repersentation of Set 1\n");
     setToBit(set1, n1, bit1);
     printSet(bit1, n3);
     printf("\nBit Repersentation of Set 2\n");
     setToBit(set2, n2, bit2);
     printSet(bit2, n3);
-    scanf("%d", p);
     printf("\nBit Representation after union\n");
     unionSet(bit1, bit2);
-    printSet(unionset,n3);
+    printSet(unionset, n3);
+    printf("\nBit Representation after intersection\n");
+    interSectionSet(bit1, bit2);
+    printSet(interset, n3);
+    scanf("%d", p);
 }
 void setToBit(int set[], int size, int bitSet[])
 // Creates the bit set from the  set as bitSet
@@ -122,6 +126,21 @@ void unionSet(int bit1[], int bit2[])
         else
         {
             unionset[i] = 0;
+        }
+    }
+}
+void interSectionSet(int bit1[], int bit2[])
+{
+    // Performs the intersection between two sets
+    for (int i = 0; i < n3; i++)
+    {
+        if (bit1[i] == 1 && bit2[i] == 1)
+        {
+            interset[i] = 1;
+        }
+        else
+        {
+            interset[i] = 0;
         }
     }
 }
