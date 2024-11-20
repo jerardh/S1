@@ -13,30 +13,28 @@ body{
  justify-content: center;  
 }
 .imagerow{
-    display: flex;
+    
     position: relative;
     top:10px;
-    height: 50%;
-    width: 50%;
 }
 
 .image1{
-    /*animation: testAnimation1 6s linear infinite;*/
     position: absolute;
-    width: 100%;
-    height: 100%; 
+    width: 100px; 
+    height: 100px;
 }
 .image2{
-   /* animation: testAnimation2 6s linear infinite;*/
+    animation: testAnimation1 6s linear infinite;
     position: absolute;
-    width: 50%;
-    height: 50%; 
+    width: 100px; 
+    height: 100px;
 }
 
 .col{
     padding: 10%;
     margin-top: 5%;
 }
+
 
 @keyframes testAnimation1{
     0%{
@@ -49,18 +47,5 @@ body{
 
     100%{
         opacity: 0%;
-    }
-}
-@keyframes testAnimation2{
-    0%{
-      opacity: 100%;
-    }
-
-    50%{
-        opacity: 0%;
-    }
-
-    100%{
-        opacity: 100%;
     }
 }
