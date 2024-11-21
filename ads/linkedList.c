@@ -7,6 +7,7 @@ struct Node
     struct Node *link;
 };
 struct Node *head = NULL;
+int nodeCount=0;                   //total number of Nodes in the list
 int choice, num, pos;
 void display();                    // Display the list
 void insert(int num);              // choose the type of insertion and Insert an element.
@@ -79,6 +80,9 @@ void delete()
         {
             printf("\nList is empty");
         }
+        else if(num==-2){
+            printf("\nEnter a valid position\n");
+        }
         else
         {
             printf("\nDeleted element =%d", num);
@@ -127,6 +131,7 @@ void insert_end(int num)
         prev->link = newNode;
         printf("\nElement added at end\n");
     }
+    nodeCount++;
 }
 void insert_beg(int num)
 {
@@ -134,6 +139,7 @@ void insert_beg(int num)
     newNode->data = num;
     newNode->link = head;
     head = newNode;
+    nodeCount++;
     printf("\nInserted new element successfully");
 }
 void insert_pos(int num, int pos)
@@ -141,6 +147,9 @@ void insert_pos(int num, int pos)
     if (pos == 0 || head == NULL)
     {
         insert_beg(num);
+    }
+    else if(pos>nodeCount-1 || pos<0){
+        printf("\nEnter a valid position\n");
     }
     else
     {
@@ -153,6 +162,7 @@ void insert_pos(int num, int pos)
         node->data = num;
         node->link = temp->link;
         temp->link = node;
+        nodeCount++;
         printf("\nInserted new element successfully");
     }
 }
@@ -164,6 +174,7 @@ int delete_beg()
     }
     else
     {
+        nodeCount--;
         int num = head->data;
         head = head->link;
         return num;
@@ -176,7 +187,8 @@ int delete_end()
         return -1; // list is empty
     }
     else if (head->link == NULL) // only 1 element in the list
-    {
+    { 
+        nodeCount--;
         num = head->data;
         head = NULL;
         return num;
@@ -192,6 +204,7 @@ int delete_end()
         }
         int data = temp->data;
         prev->link = NULL;
+        nodeCount--;
         return data;
     }
 }
@@ -208,6 +221,9 @@ int delete_pos(int pos)
         {
             num = delete_beg();
         }
+        else if(pos<0 || pos>nodeCount-1){
+            return -2;
+        }
         else
         {
             struct Node *temp = head; // points to the previous node of the node to be deleted
@@ -218,6 +234,7 @@ int delete_pos(int pos)
             struct Node *current = temp->link;
             num = current->data;
             temp->link = current->link;
+            nodeCount--;
             return num;
         }
     }
