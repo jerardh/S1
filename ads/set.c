@@ -9,13 +9,44 @@ void unionSet(int s1[], int s2[]);
 void interSectionSet(int s1[], int s2[]);
 void main()
 {
-    int p;
+    int p, temp;
+    bool elementInU = false;
     printf("\nEnter the size of the universal set:");
     scanf("%d", &n3);
     printf("\nEnter the elements\n");
     for (int i = 0; i < n3; i++)
     {
-        scanf("%d", &U[i]);
+        scanf("%d", &temp);
+        // Checking if element already entered
+        if (i != 0)
+        {
+            for (int j = 0; j <= i - 1; j++)
+            {
+                if (temp == U[j])
+                {
+                    // element already present in universal set
+                    elementInU = true;
+                    break;
+                }
+            }
+            if (!elementInU)
+            {
+                // element is unique
+                U[i] = temp;
+            }
+            else
+            {
+                printf("\nElement already present!\nPlease enter another element\n");
+                i--;
+                // decrementing i to stay in the same iteration
+                elementInU = false;
+                // changing flag to previous state
+            }
+        }
+        else
+        {
+            U[i] = temp;
+        }
     }
     printf("\nEnter the size of the first set:");
     scanf("%d", &n1);
