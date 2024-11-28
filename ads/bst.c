@@ -8,7 +8,7 @@ struct Node
     struct Node *rchild;
 };
 struct Node *root = NULL;
-void inorder(struct Node *temp);
+void preorder(struct Node *temp);
 bool insertValue(int val);
 int choice, value;
 bool res;
@@ -36,7 +36,7 @@ void main()
            
             break;
         case 3:
-            inorder(root);
+            preorder(root);
             break;
         case 4:
             exitflag = 1;
@@ -102,7 +102,7 @@ bool insertValue(int num)
     }
    
 }
-void inorder(struct Node *node)
+void preorder(struct Node *node)
 {
     if (node == NULL)
     {
@@ -111,7 +111,7 @@ void inorder(struct Node *node)
     else
     {
         printf("\t%d", node->key);
-        inorder(node->lchild);
-        inorder(root->rchild);
+        preorder(node->lchild);
+        preorder(root->rchild);
     }
 }
