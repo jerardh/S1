@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include<stdlib.h>
-//Node structure
+#include <stdlib.h>
+// Node structure
 struct Node
 {
     struct Node *lchild;
@@ -35,7 +35,6 @@ void main()
             {
                 printf("\nElement already exists");
             }
-           
             break;
         case 3:
             display();
@@ -49,6 +48,57 @@ void main()
         }
     }
 }
+bool deleteValue(int num)
+{
+    int childcount = 0;
+    struct Node *parent;
+    struct Node *current;
+    if (childcount == 0)
+    {
+        if (parent->lchild == current)
+        {
+            parent->lchild = NULL;
+        }
+        else
+        {
+            parent->rchild = NULL;
+        }
+    }
+    else if (childcount == 1)
+    {
+        if (current->lchild != NULL)
+        {
+            struct Node *child = current->lchild;
+            if (parent->lchild == current)
+            {
+                parent->lchild = child;
+            }
+            else
+            {
+                parent->rchild = child;
+            }
+        }
+    }
+    else
+    {
+        // replace by inoreder predecessor or successor
+    }
+}
+int getChildCount(struct Node *node)
+{
+    if (node->lchild != NULL && node->rchild != NULL)
+    {
+        return 2;
+    }
+    else if (node->lchild == NULL && node->rchild == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
 bool insertValue(int num)
 {
     struct Node *temp = root;
@@ -56,21 +106,21 @@ bool insertValue(int num)
     bool isPresent = false;
     while (isPresent == false && temp != NULL)
     {
-        //iterating while element is not present and current node is not null
+        // iterating while element is not present and current node is not null
         if (temp->key == num)
         {
-            //key already present in tree, no need to insert
+            // key already present in tree, no need to insert
             isPresent = true;
         }
         else if (num < temp->key)
         {
-            //moving to left child
+            // moving to left child
             parent = temp;
             temp = temp->lchild;
         }
         else
         {
-            //moving to right child
+            // moving to right child
             parent = temp;
             temp = temp->rchild;
         }
@@ -89,7 +139,7 @@ bool insertValue(int num)
         newNode->rchild = NULL;
         if (root == NULL)
         {
-            //tree is empty
+            // tree is empty
             root = newNode;
             return true;
         }
@@ -107,7 +157,6 @@ bool insertValue(int num)
             return true;
         }
     }
-   
 }
 void preorder(struct Node *node)
 {
@@ -117,29 +166,34 @@ void preorder(struct Node *node)
     }
     else
     {
-        //traversing in the order node->left child->right child
+        // traversing in the order node->left child->right child
         printf("\t%d", node->key);
         preorder(node->lchild);
         preorder(node->rchild);
     }
 }
-void inorder(struct Node* node){
-    if(node!=NULL){
-         //traversing in the order left child->node->right child
+void inorder(struct Node *node)
+{
+    if (node != NULL)
+    {
+        // traversing in the order left child->node->right child
         inorder(node->lchild);
-        printf("\t%d",node->key);
+        printf("\t%d", node->key);
         inorder(node->rchild);
     }
 }
-void postorder(struct Node* node){
-    if(node!=NULL){
-        //traversing in the order left child->right child->node
+void postorder(struct Node *node)
+{
+    if (node != NULL)
+    {
+        // traversing in the order left child->right child->node
         postorder(node->lchild);
         postorder(node->rchild);
-        printf("%d\t",node->key);
+        printf("%d\t", node->key);
     }
 }
-void display(){
+void display()
+{
     printf("\nInorder traversal\n");
     inorder(root);
     printf("\nPre Order traversal\n");
