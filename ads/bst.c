@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include<stdlib.h>
+//Node structure
 struct Node
 {
     struct Node *lchild;
@@ -10,6 +11,7 @@ struct Node
 struct Node *root = NULL;
 void preorder(struct Node *temp);
 bool insertValue(int val);
+void display();
 int choice, value;
 bool res;
 int exitflag = 0;
@@ -36,7 +38,7 @@ void main()
            
             break;
         case 3:
-            preorder(root);
+            display();
             break;
         case 4:
             exitflag = 1;
@@ -54,17 +56,21 @@ bool insertValue(int num)
     bool isPresent = false;
     while (isPresent == false && temp != NULL)
     {
+        //iterating while element is not present and current node is not null
         if (temp->key == num)
         {
+            //key already present in tree, no need to insert
             isPresent = true;
         }
         else if (num < temp->key)
         {
+            //moving to left child
             parent = temp;
             temp = temp->lchild;
         }
         else
         {
+            //moving to right child
             parent = temp;
             temp = temp->rchild;
         }
@@ -83,6 +89,7 @@ bool insertValue(int num)
         newNode->rchild = NULL;
         if (root == NULL)
         {
+            //tree is empty
             root = newNode;
             return true;
         }
@@ -110,8 +117,33 @@ void preorder(struct Node *node)
     }
     else
     {
+        //traversing in the order node->left child->right child
         printf("\t%d", node->key);
         preorder(node->lchild);
-        preorder(root->rchild);
+        preorder(node->rchild);
     }
+}
+void inorder(struct Node* node){
+    if(node!=NULL){
+         //traversing in the order left child->node->right child
+        inorder(node->lchild);
+        printf("\t%d",node->key);
+        inorder(node->rchild);
+    }
+}
+void postorder(struct Node* node){
+    if(node!=NULL){
+        //traversing in the order left child->right child->node
+        postorder(node->lchild);
+        postorder(node->rchild);
+        printf("%d\t",node->key);
+    }
+}
+void display(){
+    printf("\nInorder traversal\n");
+    inorder(root);
+    printf("\nPre Order traversal\n");
+    preorder(root);
+    printf("\nPost Order traversal\n");
+    postorder(root);
 }
