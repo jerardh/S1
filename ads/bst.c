@@ -1,6 +1,6 @@
-#include <stdio.h>
+#include<stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
+#include<stdlib.h>
 // Node structure
 struct Node
 {
@@ -11,7 +11,10 @@ struct Node
 struct Node *root = NULL;
 void preorder(struct Node *temp);
 bool insertValue(int val);
+bool deleteValue(int value);
 void display();
+int getChildCount(struct Node* node);
+struct Node* getInorderSuccessor(struct Node* temp);
 int choice, value;
 bool res;
 int exitflag = 0;
@@ -36,6 +39,17 @@ void main()
                 printf("\nElement already exists");
             }
             break;
+        case 2:
+            printf("\nEnter the value to be deleted:");
+            scanf("%d", &value);
+            res=deleteValue(value);
+            if(res){
+                printf("\nValue Deleted");
+            }
+            else{
+                printf("\nValue does not exists");
+            }
+            break;
         case 3:
             display();
             break;
@@ -51,38 +65,95 @@ void main()
 bool deleteValue(int num)
 {
     int childcount = 0;
-    struct Node *parent;
-    struct Node *current;
-    if (childcount == 0)
+    struct Node *parent = NULL;
+    struct Node *current = root;
+    bool isPresent = false;
+    while (isPresent == false && current != NULL)
     {
-        if (parent->lchild == current)
+        if (current->key == num)
         {
-            parent->lchild = NULL;
+            isPresent = true;
+            break;
+        }
+        else if (num < current->key)
+        {
+            parent = current;
+            current = current->lchild;
         }
         else
         {
-            parent->rchild = NULL;
+            parent = current;
+            current = current->rchild;
         }
     }
-    else if (childcount == 1)
+    if (!isPresent || parent == NULL)
     {
-        if (current->lchild != NULL)
-        {
-            struct Node *child = current->lchild;
-            if (parent->lchild == current)
-            {
-                parent->lchild = child;
-            }
-            else
-            {
-                parent->rchild = child;
-            }
-        }
+        //element not present
+        return false;
     }
     else
     {
-        // replace by inoreder predecessor or successor
+        //temp points to the node and parent points to the parent
+        childcount=getChildCount(current);
+        if (childcount == 0)
+        {
+            //deletion of leaf node
+            if (parent->lchild == current)
+            {
+                parent->lchild = NULL;
+            }
+            else
+            {
+                parent->rchild = NULL;
+            }
+        }
+        else if (childcount == 1)
+        {
+            //node has only one child
+
+            if(current->lchild!=NULL){
+                if(parent->lchild=current){
+                    parent->lchild=current->lchild;
+                }
+                else{
+                    parent->rchild=current->lchild;
+                }
+            }
+            else{
+                if(parent->lchild=current){
+                    parent->lchild=current->rchild;
+                }
+                else{
+                    parent->rchild=current->rchild;
+                }
+            }
+        }
+        else
+        {
+            // node has 2 children hence replace by inoreder predecessor or successor
+            struct Node* inorderSuccessor=getInorderSuccessor(current);
+            inorderSuccessor->lchild=current->lchild;
+            inorderSuccessor->rchild=current->rchild;
+            if(parent->lchild=current){
+                parent->lchild=inorderSuccessor;
+            }
+            else{
+                parent->rchild=inorderSuccessor;
+            }
+            
+        }
     }
+}
+struct Node* getInorderSuccessor(struct Node* temp){
+
+    struct Node* parent=temp->rchild;
+     struct Node* current=parent->lchild;
+     while(current!=NULL){
+            parent=current;
+           current=current->lchild;
+           
+     }
+     return parent;
 }
 int getChildCount(struct Node *node)
 {
