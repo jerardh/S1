@@ -33,19 +33,19 @@ void dfs()
     enqueue(start);
     while (front != -1 && rear != -1)
     {
-        int node=dequeue();
-        if(visited[node]!=1){
-            printf("%d\t",node);
+        int node = dequeue();
+        if (visited[node] != 1)
+        {
+            printf("%d\t", node);
             visited[node] = 1;
         }
         for (int i = 0; i < n; i++)
         {
-            if (adj[i][node] == 1 && visited[i]!=1)
+            if (adj[i][node] == 1 && visited[i] != 1)
             {
                 enqueue(i);
             }
         }
-
     }
 }
 void enqueue(int node)
@@ -61,13 +61,16 @@ void enqueue(int node)
     }
     queue[rear] = node;
 }
-int dequeue(){
-    int node=queue[front];
-    if(front==rear){
-        front=-1;
-        rear=-1;
+int dequeue()
+{
+    int node = queue[front];
+    if (front == rear)
+    {
+        front = -1;
+        rear = -1;
     }
-    else{
+    else
+    {
         front++;
     }
     return node;
