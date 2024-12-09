@@ -23,7 +23,7 @@ int main()
     }
     else
     {
-        printf("DFS visisted order");
+        printf("DFS visisted order\n");
         dfs();
     }
     return 0;
@@ -34,11 +34,13 @@ void dfs()
     while (front != -1 && rear != -1)
     {
         int node=dequeue();
-        visited[node] = 1;
-        printf("%d\t",node);
+        if(visited[node]!=1){
+            printf("%d\t",node);
+            visited[node] = 1;
+        }
         for (int i = 0; i < n; i++)
         {
-            if (adj[node][i] == 1 && visited[i] != 1)
+            if (adj[i][node] == 1 && visited[i]!=1)
             {
                 enqueue(i);
             }
