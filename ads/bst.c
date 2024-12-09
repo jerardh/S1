@@ -93,8 +93,9 @@ bool deleteValue(int num)
     }
     else
     {
-        //temp points to the node and parent points to the parent
-        childcount=getChildCount(current);
+        //current points to the node and parent points to the parent
+        struct Node *temp=current;
+        childcount=getChildCount(temp);
         if (childcount == 0)
         {
             //deletion of leaf node
@@ -110,9 +111,8 @@ bool deleteValue(int num)
         else if (childcount == 1)
         {
             //node has only one child
-
             if(current->lchild!=NULL){
-                if(parent->lchild=current){
+                if(parent->lchild==current){
                     parent->lchild=current->lchild;
                 }
                 else{
@@ -120,40 +120,42 @@ bool deleteValue(int num)
                 }
             }
             else{
-                if(parent->lchild=current){
+                if(parent->lchild==current){
                     parent->lchild=current->rchild;
                 }
                 else{
                     parent->rchild=current->rchild;
                 }
             }
+            
         }
         else
         {
             // node has 2 children hence replace by inoreder predecessor or successor
             struct Node* inorderSuccessor=getInorderSuccessor(current);
-            inorderSuccessor->lchild=current->lchild;
-            inorderSuccessor->rchild=current->rchild;
-            if(parent->lchild=current){
+            if(parent->lchild==current){
                 parent->lchild=inorderSuccessor;
             }
             else{
                 parent->rchild=inorderSuccessor;
             }
-            
+            inorderSuccessor->lchild=current->lchild;
+            inorderSuccessor->rchild=current->rchild;
         }
     }
 }
 struct Node* getInorderSuccessor(struct Node* temp){
-
+//returns the inorder successor
     struct Node* parent=temp->rchild;
      struct Node* current=parent->lchild;
-     while(current!=NULL){
+     while(current->lchild!=NULL){
             parent=current;
            current=current->lchild;
            
      }
-     return parent;
+     //making the parent of inoreder successor to point to null in the lchild
+     parent->lchild=NULL;
+     return current;
 }
 int getChildCount(struct Node *node)
 {
