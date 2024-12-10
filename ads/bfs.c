@@ -7,6 +7,7 @@ int main()
 {
     printf("\nEnter the no: of nodes:");
     scanf("%d", &n);
+    // Reading the graph from adjacency matrix
     for (i = 0; i < n; i++)
     {
         for (j = 0; j < n; j++)
@@ -24,23 +25,24 @@ int main()
     else
     {
         printf("DFS visisted order\n");
-        bfs();
+        bfs(start);
     }
     return 0;
 }
-void bfs(int node)
+void bfs(int start)
 {
-    enqueue(node);
+    enqueue(start);
     visited[start] = 1;
+    printf("%d\t", start);
     while (front != -1 && rear != -1)
     {
         int node = dequeue();
-        printf("%d\t", node);
         for (int i = 0; i < n; i++)
         {
             if (adj[i][node] == 1 && visited[i] != 1)
             {
                 visited[i] = 1;
+                printf("%d\t", i);
                 enqueue(i);
             }
         }
