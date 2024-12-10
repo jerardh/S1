@@ -1,6 +1,6 @@
 #include <stdio.h>
 int n, i, j, adj[20][20], start, visited[20], queue[10], front = -1, rear = -1;
-void dfs();
+void bfs();
 void enqueue(int node);
 int dequeue();
 int main()
@@ -24,25 +24,23 @@ int main()
     else
     {
         printf("DFS visisted order\n");
-        dfs();
+        bfs();
     }
     return 0;
 }
-void dfs()
+void bfs(int node)
 {
-    enqueue(start);
+    enqueue(node);
+    visited[start] = 1;
     while (front != -1 && rear != -1)
     {
         int node = dequeue();
-        if (visited[node] != 1)
-        {
-            printf("%d\t", node);
-            visited[node] = 1;
-        }
+        printf("%d\t", node);
         for (int i = 0; i < n; i++)
         {
             if (adj[i][node] == 1 && visited[i] != 1)
             {
+                visited[i] = 1;
                 enqueue(i);
             }
         }
