@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 int adj[20][20], stack[20], top = -1, n, i, j, start, visited[20];
-void push(int node);
 void dfs(int start);
-int pop();
 void main()
 {
     printf("\nEnter number of nodes:");
