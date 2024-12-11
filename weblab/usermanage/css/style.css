@@ -19,3 +19,8 @@ table{
     border-radius: 3px;
    
 }
+h1{
+    margin-top: 5%;
+    font-size: larger;
+    font-weight: 500;
+}

@@ -9,29 +9,31 @@
 </head>
 
 <body>
+
     <?php
-        if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $conn=mysqli_connect("localhost","root","","test");
-            if($conn){
-                $uname=$_POST["username"];
-                $pass=$_POST["password"];
-                $cpass=$_POST["cpassword"];
-                $mail=$_POST["mail"];
-                $phone=$_POST["phone"];
-                $q="INSERT INTO USERS(USERNAME,PASSWORD,EMAIL,PHONE)VALUES('".$uname."','".$pass."','".$mail."','".$phone."')";
-                if($conn->query($q)){
-                    echo "Registrartion success";
-                }
-                else{
-                    echo "failed";
-                }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $conn = mysqli_connect("localhost", "root", "", "test");
+        if ($conn) {
+            $uname = $_POST["username"];
+            $pass = $_POST["password"];
+            $cpass = $_POST["cpassword"];
+            $mail = $_POST["mail"];
+            $phone = $_POST["phone"];
+            $q = "INSERT INTO USERS(USERNAME,PASSWORD,EMAIL,PHONE)VALUES('" . $uname . "','" . $pass . "','" . $mail . "','" . $phone . "')";
+            if ($conn->query($q)) {
+                //Navigating to login after registration
+                header("location:login.php");
+            } else {
+                //Error in query
+                echo "failed";
             }
-            else{
-                echo "unable to connect";
-            }
+        } else {
+            echo "unable to connect";
         }
+    }
 
     ?>
+    <h1>Sign Up</h1>
     <form method="POST">
         <table>
             <tr>
@@ -40,11 +42,11 @@
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="text" name="password" class="input" /></td>
+                <td><input type="password" name="password" class="input" /></td>
             </tr>
             <tr>
                 <td>Confirm password</td>
-                <td><input type="text" name="cpassword" class="input" /></td>
+                <td><input type="password" name="cpassword" class="input" /></td>
             </tr>
             <tr>
                 <td>E-mail</td>
