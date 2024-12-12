@@ -191,8 +191,9 @@ struct Node *getInorderSuccessor(struct Node *temp)
         parent = current;
         current = current->lchild;
     }
-    // making the parent of inoreder successor to point to null in the lchild
-    parent->lchild = NULL;
+    // making the parent of inoreder successor to point to child of successor 
+    //so that if the successor has a right child it will be pointing to the parent
+    parent->lchild = current->rchild;
     return current;
 }
 int getChildCount(struct Node *node)
