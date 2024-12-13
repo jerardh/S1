@@ -1,21 +1,25 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <limits.h>
 int adj[20][20], n, vertex, visited[20], mst[20][20], cost = 0;
+// defining edge
 struct Edge
 {
     int u;
     int v;
     int cost;
 };
-void kruskal(int start);
+void prims(int start);
 void main()
 {
-    for(int i=0;i<n;i++){
-        visited[i]=0;
-    }
+
     printf("\nEnter the number of nodes:");
     scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        visited[i] = 0;
+    }
     printf("\nEnter the adjacency matrix:");
     for (int i = 0; i < n; i++)
     {
@@ -25,20 +29,10 @@ void main()
             scanf("%d", &adj[i][j]);
         }
     }
-    while (true)
-    {
-        printf("\nEnter the starting vertex:");
-        scanf("%d", &vertex);
-        if (vertex >= 0 || vertex < n)
-        {
-            break;
-        }
-        else
-        {
-            printf("\nInvalid choice..\n");
-        }
-    }
-    kruskal(vertex);
+    // Reading the arbiraty vertex from which the mst should start
+    printf("\nEnter the starting vertex:");
+    scanf("%d", &vertex);
+    prims(vertex);
     printf("\nMST Nodes and Edges\n");
     for (int i = 0; i < n; i++)
     {
@@ -51,22 +45,25 @@ void main()
         }
     }
 }
-void kruskal(int start)
+void prims(int start)
 {
     int visitedVertexCount = 0;
     struct Edge *minEdge = (struct Edge *)malloc(sizeof(struct Edge));
-    minEdge->cost=__INT_MAX__;
+    minEdge->cost = INT_MAX;
+    // marking as visited
     visited[start] = 1;
     visitedVertexCount++;
-    while (visitedVertexCount < n)
+    while (visitedVertexCount < n) // algoirthm should terminate when all vertices are added
     {
         for (int i = 0; i < n; i++)
         {
             if (visited[i] == 1)
             {
+
                 for (int j = 0; j < n; j++)
                 {
-                    if (adj[i][j] != 0 && visited[j] ==0  && adj[i][j] < minEdge->cost)
+                    // finding the minimum edge between 2 vertices (i,j) such that i is visited, j is not visited
+                    if (adj[i][j] != 0 && visited[j] == 0 && adj[i][j] < minEdge->cost)
                     {
                         minEdge->u = i;
                         minEdge->v = j;
@@ -75,14 +72,10 @@ void kruskal(int start)
                 }
             }
         }
-        printf("\nAdded Edge->%d-%d", minEdge->u, minEdge->v);
         visited[minEdge->v] = 1;
-        printf("\nVisted %d",minEdge->v);
         cost += minEdge->cost;
         visitedVertexCount++;
-        adj[minEdge->u][minEdge->v] = __INT_MAX__;
         mst[minEdge->u][minEdge->v] = minEdge->cost;
-        minEdge->cost = __INT_MAX__;
-        break;
+        minEdge->cost = INT_MAX;
     }
 }
