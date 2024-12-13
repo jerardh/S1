@@ -44,6 +44,7 @@ void main()
             }
         }
     }
+    printf("\nMinimum cost=%d",cost);
 }
 void prims(int start)
 {
