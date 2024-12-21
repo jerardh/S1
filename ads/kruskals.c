@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 int rank[20], parent[20], adj[20][20], mst[20][20], n, numEdges = 0;
 int cost;
 // Defining edge structure to get minimum edge repeatedly
@@ -68,7 +69,7 @@ struct Edge *getMinEdge()
 {
     // returns the next available edge with minimum weight
     struct Edge *edge = malloc(sizeof(struct Edge));
-    int minWeight = __INT_MAX__, min1, min2, nodes[2], cost;
+    int minWeight = INT_MAX, min1, min2, nodes[2], cost;
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
@@ -84,7 +85,7 @@ struct Edge *getMinEdge()
             }
         }
     }
-    adj[edge->u][edge->v] = __INT_MAX__;
+    adj[edge->u][edge->v] = INT_MAX;
     return edge;
 }
 int find(int node)
