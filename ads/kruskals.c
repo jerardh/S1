@@ -107,9 +107,9 @@ void setUnion(int u, int v)
     {
         parent[v] = u;
     }
-    else if (rank[u] > rank[v])
+    else if (rank[v] > rank[u])
     {
-        parent[v] = u;
+        parent[u] = v;
     }
     else
     {
