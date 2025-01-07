@@ -14,6 +14,9 @@ void display();
 void insertBeg(int num);
 void insertEnd(int num);
 void insertPos(int num, int pos);
+int deleteBeg();
+int deletePos(int pos);
+int deleteEnd();
 void main()
 {
     int op, num, exit = 0;
@@ -135,7 +138,7 @@ void insertPos(int num, int pos)
         {
             prev = prev->next;
         }
-        struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+        struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
         // Arranging links
         newNode->data = num;
         newNode->next = prev->next;
@@ -146,6 +149,154 @@ void insertPos(int num, int pos)
 }
 void delete()
 {
+    int op, num, pos;
+    printf("\n1.Deletion at beginning\n2.Deletion at a position\n3.Deletion at end\nChoose your option:");
+    scanf("%d", &op);
+    switch (op)
+    {
+    case 1:
+        num = deleteBeg();
+        if (num == -1)
+        {
+            printf("\nList is empty");
+        }
+        else
+        {
+            printf("\nDeleted value=%d", num);
+        }
+        break;
+    case 2:
+        printf("\nEnter the position of the node to be deleted");
+        scanf("%d", &pos);
+        if (pos < 0 || pos > nodeCount - 1)
+        {
+            // invalid position
+            printf("\nInvalid position");
+        }
+        else
+        {
+            num = deletePos(pos);
+            printf("\nDeleted value=%d", num);
+        }
+        break;
+    case 3:
+        num = deleteEnd();
+        if (num == -1)
+        {
+            printf("\nList is empty");
+        }
+        else
+        {
+            printf("\nDeleted value=%d", num);
+        }
+        break;
+    default:
+        printf("\nEnter a valid choice..");
+        break;
+    }
+}
+int deleteBeg()
+{
+    if (head == NULL && tail == NULL)
+    {
+        // list is empty
+        return (-1);
+    }
+    else
+    {
+        int num = head->data;
+        if (head == tail)
+        {
+            // single node in the list
+            head = NULL;
+            tail = NULL;
+        }
+        else
+        {
+            // updating head
+            struct Node *temp = head;
+            head = temp->next;
+            // updating link of last node to point to new 'FIRST NODE'
+            tail->next = head;
+            // freeing the deleted node
+            free(temp);
+        }
+        nodeCount--;
+        return num;
+    }
+}
+int deletePos(int pos)
+{
+
+    if (head == NULL && tail == NULL)
+    {
+        // list is empty
+        return -1;
+    }
+    else
+    {
+        if (pos == 0)
+        {
+            // delete from beginning
+            int num = deleteBeg();
+            return num;
+        }
+        else
+        {
+            // iterate till pos-1
+            struct Node *prev = head;
+            for (int i = 0; i < pos - 1; i++)
+            {
+                prev = prev->next;
+            }
+            struct Node *current = prev->next; // node to be deleted
+            int num = current->data;
+            struct Node *next = current->next;
+            // updating links
+            prev->next = next;
+            free(current);
+            nodeCount--;
+            return num;
+        }
+    }
+}
+int deleteEnd()
+{
+    if (head == NULL && tail == NULL)
+    {
+        // list is empty
+        return (-1);
+    }
+    else
+    {
+        int num = head->data;
+        if (head == tail)
+        {
+            // single node in the list
+            head = NULL;
+            tail = NULL;
+        }
+        else
+        {
+            // iterate till second last node
+            struct Node *prev = head;
+            struct Node *current = head;
+            while (current->next != head)
+            {
+                prev = current;
+                current = current->next;
+            }
+            // prev will point to second last node
+            // current will point to last node
+            // make link of prev to point to first node
+            prev->next = head;
+            num = current->data;
+            tail = prev;
+            free(current);
+        }
+        nodeCount--;
+        return (num);
+    }
 }
 void display()
 {
